@@ -1,50 +1,481 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LB Informática | Soporte Técnico Integral</title>
-    <link rel="icon" href="icono.png" type="image/x-icon">
-    
-    <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #f4f4f9; 
-            color: #333; 
-            text-align: center; 
-            padding: 50px; 
-        }
-        .contenedor {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        h1 { color: #0056b3; }
-        .servicios { text-align: left; margin-top: 20px; }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LB Informática – Soporte Técnico · La Plata · Chascomús · Ranchos</title>
+  <meta name="description" content="Reparación de computadoras, redes y soporte técnico en La Plata, Chascomús y Ranchos. Soluciones rápidas a tu medida."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --blue: #1e90ff;
+      --blue-dim: #0d5fba;
+      --glow: rgba(30,144,255,0.35);
+      --bg: #060d16;
+      --surface: #0b1825;
+      --surface2: #0f2035;
+      --line: rgba(30,144,255,0.18);
+      --muted: #5a8ab0;
+      --text: #ddeeff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--blue); color: #fff; }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 100% 100% at 50% 0%, black 30%, transparent 100%);
+      opacity: .4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6%; height: 64px;
+      background: rgba(6,13,22,.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+    .logo { font-family: 'Barlow Condensed', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: 1px; color: #fff; text-decoration: none; }
+    .logo span { color: var(--blue); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: .85rem; font-weight: 400; letter-spacing: .5px; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { background: var(--blue); color: #fff !important; padding: .4rem 1.1rem; border-radius: 5px; font-weight: 500 !important; transition: opacity .2s !important; }
+    .nav-cta:hover { opacity: .85; }
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--blue); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 64px 6% 0;
+      position: relative; z-index: 1;
+    }
+    .hero-wrap {
+      max-width: 1100px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 380px; gap: 5rem; align-items: center;
+    }
+    .hero-eyebrow {
+      font-size: .75rem; font-weight: 500; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 1.2rem;
+      opacity: 0; animation: up .5s .1s forwards;
+    }
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(3.5rem, 7vw, 6rem);
+      font-weight: 800; line-height: .95; letter-spacing: -1px;
+      opacity: 0; animation: up .55s .2s forwards;
+    }
+    h1 em { font-style: normal; color: var(--blue); }
+    .hero-sub {
+      margin-top: 1.4rem;
+      font-size: 1.05rem; color: var(--muted); line-height: 1.7; max-width: 460px;
+      opacity: 0; animation: up .55s .3s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: .8rem; margin-top: 2.2rem; flex-wrap: wrap;
+      opacity: 0; animation: up .55s .4s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: .75rem 1.6rem; border-radius: 6px;
+      font-family: 'Barlow', sans-serif; font-size: .9rem; font-weight: 500;
+      text-decoration: none; transition: transform .2s, box-shadow .2s, opacity .2s;
+      cursor: pointer; border: none;
+    }
+    .btn-solid { background: var(--blue); color: #fff; box-shadow: 0 4px 24px var(--glow); }
+    .btn-solid:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(30,144,255,.55); }
+    .btn-ghost { border: 1px solid var(--line); color: var(--muted); }
+    .btn-ghost:hover { border-color: var(--blue); color: var(--text); }
+
+    /* Hero panel */
+    .hero-panel {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 2rem;
+      opacity: 0; animation: fadein .7s .4s forwards;
+    }
+    .panel-label { font-size: .7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
+    .phone-row {
+      display: flex; align-items: center; gap: .8rem;
+      padding: .9rem 0; border-bottom: 1px solid var(--line);
+      text-decoration: none; transition: padding-left .2s;
+    }
+    .phone-row:last-of-type { border-bottom: none; }
+    .phone-row:hover { padding-left: .4rem; }
+    .phone-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(37,211,102,.12); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .phone-num { font-family: 'Barlow Condensed', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--text); letter-spacing: .5px; }
+    .phone-tag { font-size: .75rem; color: var(--muted); }
+    .panel-zones { margin-top: 1.2rem; padding: .9rem 1rem; background: rgba(30,144,255,.06); border-radius: 8px; border: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
+    .panel-zones strong { color: var(--blue); display: block; margin-bottom: .2rem; font-size: .7rem; letter-spacing: 1.5px; text-transform: uppercase; }
+
+    /* SECTIONS */
+    section { position: relative; z-index: 1; }
+    .inner { max-width: 1100px; margin: 0 auto; padding: 110px 6%; }
+    .eyebrow { font-size: .7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: .8rem; font-weight: 500; }
+    h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1; letter-spacing: -.5px; margin-bottom: .8rem; }
+    h2 span { color: var(--blue); }
+    .lead { color: var(--muted); max-width: 500px; line-height: 1.7; margin-bottom: 3rem; }
+
+    /* SERVICES */
+    #servicios { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+    }
+    .svc { background: var(--surface); padding: 2rem 1.6rem; position: relative; overflow: hidden; transition: background .25s; }
+    .svc::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--blue); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+    .svc:hover { background: var(--surface2); }
+    .svc:hover::before { transform: scaleX(1); }
+    .svc-num { font-family: 'Barlow Condensed', sans-serif; font-size: .8rem; font-weight: 700; letter-spacing: 2px; color: var(--blue); margin-bottom: 1.2rem; opacity: .6; }
+    .svc-icon { font-size: 1.8rem; margin-bottom: .9rem; }
+    .svc-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: .6rem; color: #fff; text-transform: uppercase; letter-spacing: .5px; }
+    .svc-desc { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+    /* PROCESS */
+    #como { background: var(--bg); }
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
+    .step { padding: 2rem; border-left: 2px solid var(--line); }
+    .step-n { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 800; color: var(--blue); opacity: .15; line-height: 1; margin-bottom: .4rem; }
+    .step-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: .5rem; color: #fff; }
+    .step-desc { font-size: .9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ZONES */
+    #zonas { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .zones-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-bottom: 2rem; }
+    .zone { background: var(--surface); padding: 2.5rem 2rem; transition: background .2s; }
+    .zone:hover { background: var(--surface2); }
+    .zone-name { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; font-weight: 800; color: #fff; }
+    .zone-label { font-size: .8rem; color: var(--muted); letter-spacing: 1px; margin-top: .3rem; }
+    .remote-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap;
+      padding: 1.4rem 1.8rem;
+      border: 1px solid var(--line); border-radius: 10px;
+      background: rgba(30,144,255,.04);
+    }
+    .remote-bar p { font-size: .9rem; color: var(--muted); }
+    .remote-bar p strong { color: var(--text); }
+
+    /* CONTACT */
+    #contacto { background: var(--bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .contact-info h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 1.4rem; color: #fff; }
+    .cmethod {
+      display: flex; align-items: center; gap: .9rem;
+      padding: .9rem 0; border-bottom: 1px solid var(--line);
+      text-decoration: none; transition: padding-left .2s;
+    }
+    .cmethod:last-of-type { border-bottom: none; }
+    .cmethod:hover { padding-left: .4rem; }
+    .cmethod-icon { width: 38px; height: 38px; border-radius: 8px; background: rgba(37,211,102,.1); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .cmethod-val { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 700; color: #fff; }
+    .cmethod-tag { font-size: .75rem; color: var(--muted); }
+
+    .form-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 2rem; }
+    .fgroup { margin-bottom: 1rem; }
+    label { display: block; font-size: .75rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+    input, textarea, select {
+      width: 100%; background: rgba(30,144,255,.04); border: 1px solid var(--line);
+      border-radius: 7px; padding: .75rem 1rem;
+      color: var(--text); font-family: 'Barlow', sans-serif; font-size: .95rem;
+      outline: none; transition: border-color .2s; resize: none; appearance: none;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--blue); }
+    textarea { height: 110px; }
+    .btn-form {
+      width: 100%; padding: .85rem;
+      background: var(--blue); color: #fff;
+      border: none; border-radius: 7px; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      box-shadow: 0 4px 20px var(--glow);
+      transition: opacity .2s, transform .2s;
+    }
+    .btn-form:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--line); padding: 2.5rem 6%;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem; position: relative; z-index: 1;
+    }
+    .footer-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--text); }
+    .footer-logo span { color: var(--blue); }
+    footer p { font-size: .8rem; color: var(--muted); }
+
+    /* WA FLOAT */
+    .wa-btn {
+      position: fixed; bottom: 24px; right: 24px; z-index: 200;
+      width: 54px; height: 54px; border-radius: 50%;
+      background: #25d366; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,.45);
+      text-decoration: none; transition: transform .2s;
+    }
+    .wa-btn:hover { transform: scale(1.1); }
+    .wa-btn svg { width: 28px; height: 28px; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .55s, transform .55s; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @keyframes up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+    @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .hero-wrap { grid-template-columns: 1fr; }
+      .hero-panel { display: none; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .zones-row { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: rgba(6,13,22,.97); border-bottom: 1px solid var(--line); padding: 1.5rem 6%; flex-direction: column; gap: 1.2rem; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .remote-bar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="contenedor">
-        <h1>LB Informática</h1>
-        <h2>Soluciones IT y Soporte Técnico</h2>
-        <p>Brindamos asistencia integral a hogares, PyMEs y empresas.</p>
-        
-        <div class="servicios">  
-            <h3>Nuestros Servicios:</h3>
-            <ul>
-                <li>Mantenimiento preventivo y correctivo</li>
-                <li>Cambio de discos y actualización de hardware</li>
-                <li>Formateos e instalación de sistemas</li>
-                <li>Armado de redes e infraestructura</li>
-            </ul>
-        </div>
-        
-        <p><strong>Contacto:</strong> contacto@ejemplo.com | WhatsApp: +54 9 11 XXXX-XXXX</p>
+<nav>
+  <a href="#" class="logo">LB<span> Informática</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#como">¿Cómo trabajamos?</a></li>
+    <li><a href="#zonas">Zonas</a></li>
+    <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+  </ul>
+  <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-wrap">
+    <div>
+      <div class="hero-eyebrow">Soporte técnico · Redes · Informática</div>
+      <h1>Tecnología<br>que <em>funciona.</em></h1>
+      <p class="hero-sub">
+        Reparamos tu equipo, configuramos tu red y resolvemos cualquier problema técnico. Rápido, sin vueltas, en La Plata, Chascomús y Ranchos.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/542241463626" target="_blank" class="btn btn-solid">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribinos ahora
+        </a>
+        <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
+      </div>
     </div>
 
+    <div class="hero-panel">
+      <div class="panel-label">Contacto directo</div>
+      <a href="https://wa.me/542241463626" target="_blank" class="phone-row">
+        <div class="phone-icon">💬</div>
+        <div><div class="phone-num">2241 463626</div><div class="phone-tag">Principal</div></div>
+      </a>
+      <a href="https://wa.me/542241461843" target="_blank" class="phone-row">
+        <div class="phone-icon">💬</div>
+        <div><div class="phone-num">2241 461843</div><div class="phone-tag">Alternativo</div></div>
+      </a>
+      <a href="https://wa.me/542241506485" target="_blank" class="phone-row">
+        <div class="phone-icon">💬</div>
+        <div><div class="phone-num">2241 506485</div><div class="phone-tag">Alternativo</div></div>
+      </a>
+      <div class="panel-zones">
+        <strong>Cobertura presencial</strong>
+        La Plata · Chascomús · Ranchos<br>
+        <span style="font-size:.8rem;opacity:.7">+ Soporte remoto a todo el país</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="inner">
+    <div class="eyebrow reveal">Servicios</div>
+    <h2 class="reveal">Lo que <span>hacemos</span></h2>
+    <p class="lead reveal">Cuatro áreas de trabajo. Sin intermediarios, sin largas esperas.</p>
+
+    <div class="services-grid reveal">
+      <div class="svc">
+        <div class="svc-num">01</div>
+        <div class="svc-icon">💻</div>
+        <div class="svc-title">Reparación</div>
+        <div class="svc-desc">PCs y notebooks. Diagnóstico, reparación de hardware, limpieza y reemplazo de componentes.</div>
+      </div>
+      <div class="svc">
+        <div class="svc-num">02</div>
+        <div class="svc-icon">🌐</div>
+        <div class="svc-title">Redes</div>
+        <div class="svc-desc">Instalación y configuración de redes Wi-Fi y cableadas para hogares y empresas.</div>
+      </div>
+      <div class="svc">
+        <div class="svc-num">03</div>
+        <div class="svc-icon">🛡️</div>
+        <div class="svc-title">Soporte técnico</div>
+        <div class="svc-desc">Asistencia remota o presencial. Software, sistema operativo, virus y problemas varios.</div>
+      </div>
+      <div class="svc">
+        <div class="svc-num">04</div>
+        <div class="svc-icon">⚙️</div>
+        <div class="svc-title">Adicionales</div>
+        <div class="svc-desc">Recuperación de datos, instalación de software, actualizaciones de hardware y backups.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="como">
+  <div class="inner">
+    <div class="eyebrow reveal">El proceso</div>
+    <h2 class="reveal">Simple y <span>rápido</span></h2>
+    <p class="lead reveal">Sin formularios eternos ni presupuestos por correo.</p>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-n">01</div>
+        <div class="step-title">Nos contactás</div>
+        <div class="step-desc">Por WhatsApp, describís el problema. Coordinamos visita o acceso remoto en el momento.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">02</div>
+        <div class="step-title">Diagnóstico</div>
+        <div class="step-desc">Evaluamos el equipo o sistema y te informamos qué tiene, qué necesita y cuánto cuesta. Sin sorpresas.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">03</div>
+        <div class="step-title">Solución</div>
+        <div class="step-desc">Resolvemos y te entregamos el equipo funcionando o la red operativa. Listo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="zonas">
+  <div class="inner">
+    <div class="eyebrow reveal">Cobertura</div>
+    <h2 class="reveal">Donde <span>estás</span></h2>
+
+    <div class="zones-row reveal">
+      <div class="zone">
+        <div class="zone-name">La Plata</div>
+        <div class="zone-label">Buenos Aires · Atención presencial</div>
+      </div>
+      <div class="zone">
+        <div class="zone-name">Chascomús</div>
+        <div class="zone-label">Buenos Aires · Atención presencial</div>
+      </div>
+      <div class="zone">
+        <div class="zone-name">Ranchos</div>
+        <div class="zone-label">Buenos Aires · Atención presencial</div>
+      </div>
+    </div>
+
+    <div class="remote-bar reveal">
+      <p><strong>¿Fuera de estas zonas?</strong> Ofrecemos soporte remoto a cualquier parte del país.</p>
+      <a href="https://wa.me/542241463626" target="_blank" class="btn btn-solid" style="white-space:nowrap;">Consultar</a>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="inner">
+    <div class="eyebrow reveal">Contacto</div>
+    <h2 class="reveal">¿Tenés un problema? <span>Escribinos.</span></h2>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>WhatsApp directo</h3>
+        <a href="https://wa.me/542241463626" target="_blank" class="cmethod">
+          <div class="cmethod-icon">💬</div>
+          <div><div class="cmethod-val">2241 463626</div><div class="cmethod-tag">Principal</div></div>
+        </a>
+        <a href="https://wa.me/542241461843" target="_blank" class="cmethod">
+          <div class="cmethod-icon">💬</div>
+          <div><div class="cmethod-val">2241 461843</div><div class="cmethod-tag">Alternativo</div></div>
+        </a>
+        <a href="https://wa.me/542241506485" target="_blank" class="cmethod">
+          <div class="cmethod-icon">💬</div>
+          <div><div class="cmethod-val">2241 506485</div><div class="cmethod-tag">Alternativo</div></div>
+        </a>
+      </div>
+
+      <div class="form-card reveal">
+        <div class="fgroup">
+          <label>Tu nombre</label>
+          <input type="text" id="f-nombre" placeholder="Juan García"/>
+        </div>
+        <div class="fgroup">
+          <label>Servicio que necesitás</label>
+          <select id="f-servicio">
+            <option value="">Seleccioná...</option>
+            <option>Reparación de computadora</option>
+            <option>Redes y conectividad</option>
+            <option>Soporte técnico remoto</option>
+            <option>Soporte técnico presencial</option>
+            <option>Recuperación de datos</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label>Descripción</label>
+          <textarea id="f-msg" placeholder="Contanos brevemente qué pasa..."></textarea>
+        </div>
+        <button class="btn-form" onclick="enviarWA()">Enviar por WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">LB<span> Informática</span></div>
+  <p>La Plata · Chascomús · Ranchos &nbsp;·&nbsp; © 2025</p>
+</footer>
+
+<a href="https://wa.me/542241463626" target="_blank" class="wa-btn" title="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  function enviarWA() {
+    const n = document.getElementById('f-nombre').value.trim();
+    const s = document.getElementById('f-servicio').value;
+    const m = document.getElementById('f-msg').value.trim();
+    if (!n || !s) { alert('Completá tu nombre y el servicio.'); return; }
+    let txt = `Hola! Me contacto desde la web.\n\n*Nombre:* ${n}\n*Servicio:* ${s}`;
+    if (m) txt += `\n*Consulta:* ${m}`;
+    window.open(`https://wa.me/542241463626?text=${encodeURIComponent(txt)}`, '_blank');
+  }
+
+  document.querySelectorAll('.nav-links a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'))
+  );
+</script>
 </body>
 </html>
